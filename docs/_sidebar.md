@@ -39,12 +39,7 @@
 - [Model tree](model-tree.md)
 - [Data from](data-form.md)
 - Admin extensions
-  - [Extension development](extension-development.md)
-  - [Helpers](extension-helpers.md)
-  - [Media manager](extension-media-manager.md)
-  - [API tester](extension-api-tester.md)
-  - [Config manager](extension-config.md)
-  - [Task scheduling](extension-scheduling.md)
+  - [Extension development](extension-development.md) 
 - [Console commands](commands.md)
 - [Content message](content-message.md)
 - [Widgets](widgets.md)
