@@ -148,7 +148,7 @@ Determine if the current form page is creating or updating
 ```php
 $form->isCreating();
 
-$form->isUpdating();
+$form->isEditing();
 ```
 
 ## Model relationship
