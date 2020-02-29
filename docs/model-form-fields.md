@@ -657,6 +657,11 @@ $form->divider();
 // OR
 
 $form->divider('Title');
+
+//OR
+
+$form->divider('Some long words')->note();
+
 ```
 
 ## Html
