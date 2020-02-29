@@ -10,6 +10,11 @@ If the value of a column field is a number and it needs to be displayed at the b
 $grid->column('quantity')->totalRow();
 
 $grid->column('amount')->totalRow();
+
+$grid->column('manager_name')->totalRow('Total:');
+$grid->column('expand_orders')->totalCount(); //for counting rows
+$grid->column('orders_all_sum')->totalSum(); //for counting sum
+$grid->column('orders_approved_avg')->totalAvg();//for counting average
 ```
 
 Call the `totalRow()` method after the corresponding field.
