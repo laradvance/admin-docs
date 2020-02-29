@@ -7,10 +7,6 @@
 If the value of a column field is a number and it needs to be displayed at the bottom of the table after statistics, you can use the following method.
 
 ```php
-$grid->column('quantity')->totalRow();
-
-$grid->column('amount')->totalRow();
-
 $grid->column('manager_name')->totalRow('Total:');
 
 $grid->column('expand_orders')->totalCount(); //for counting rows
