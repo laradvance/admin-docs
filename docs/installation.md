@@ -1,22 +1,13 @@
-# Installation
+## Installation
 
-> This package requires PHP 7+ and Laravel 5.5, for old versions please refer to [1.4](http://laravel-admin.org/docs/v1.4/#/)
-
-First, install laravel, and make sure that the database connection settings are correct.
+> This package requires PHP 7+ and Laravel 5.5+
 
 ```
-composer require encore/laravel-admin
-
+composer create-project muhlisabdi/crud-admin blog
 ```
 
-Then run these commands to publish assets and config：
+Update .env file based on your configuration
 
-```
-php artisan vendor:publish --provider="Encore\Admin\AdminServiceProvider"
-```
-After run command you can find config file in `config/admin.php`, in this file you can change the install directory,db connection or table names.
-
-At last run following command to finish install. 
 ```
 php artisan admin:install
 ```
