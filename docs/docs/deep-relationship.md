@@ -1,4 +1,4 @@
-## Usage
+## Deep Many Relationship
 
 - [HasMany](#hasmany)
 - [ManyToMany](#manytomany)
