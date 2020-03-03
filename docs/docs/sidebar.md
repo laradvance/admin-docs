@@ -2,7 +2,6 @@
   - [Installation](docs/installation.md)
   - [Quick start](docs/quick-start.md)
   - [Configuration](docs/configuration.md)
-  - [Upgrading](docs/updating.md)
   - [Page content & Layout](docs/content-layout.md)
 - Model grid
   - [Basic usage](docs/model-grid.md)
@@ -49,4 +48,4 @@
 - [Custom Navbar](docs/custom-navbar.md)
 - [Custom chart](docs/custom-chart.md)
 - [Custom Relationship Models](docs/deep-relationship.md)
-- [Upgrade precautions](docs/upgrade.md)
+- [Deployment](docs/deploy.md)
