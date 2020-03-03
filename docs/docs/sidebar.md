@@ -48,4 +48,5 @@
 - [Custom authentication](docs/custom-authentication.md)
 - [Custom Navbar](docs/custom-navbar.md)
 - [Custom chart](docs/custom-chart.md)
+- [Custom Relationship Models](docs/deep-relationship.md)
 - [Upgrade precautions](docs/upgrade.md)
