@@ -13,7 +13,7 @@ Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
 });
 ```
 
-method `left` nad `right`方is used to add the contents of the left and right sides of the head, the method parameters can be any object can be rendered( objects which impletements `Htmlable`、`Renderable`, or has method `__toString()`) or strings.
+method `left` and `right` is used to add the contents of the left and right sides of the head, the method parameters can be any object can be rendered( objects which impletements `Htmlable`、`Renderable`, or has method `__toString()`) or strings.
 
 ## Add elements to the left
 
@@ -56,93 +56,39 @@ $navbar->left(view('search-bar'));
 
 ## Add elements to the right
 
-You can only add the `<li>` tag on the right side of the navigation, such as adding some prompt icons, creating a new rendering class `app/Admin/Extensions/Nav/Links.php`
 ```php
-<?php
-
-namespace App\Admin\Extensions\Nav;
-
-class Links
-{
-    public function __toString()
-    {
-        return <<<HTML
-
-<li>
-    <a href="#">
-      <i class="fa fa-envelope-o"></i>
-      <span class="label label-success">4</span>
-    </a>
-</li>
-
-<li>
-    <a href="#">
-      <i class="fa fa-bell-o"></i>
-      <span class="label label-warning">7</span>
-    </a>
-</li>
-
-<li>
-    <a href="#">
-      <i class="fa fa-flag-o"></i>
-      <span class="label label-danger">9</span>
-    </a>
-</li>
-
-HTML;
-    }
-}
+$navbar->left(view('search-bar'));
 ```
 
-Then add it to the head navigation bar:
+## Add links to navigation bar
+
+Open `app/Admin/bootstrap.php` and add the following:
+
 ```php
-$navbar->right(new \App\Admin\Extensions\Nav\Links());
+use App\Admin\Extensions\Nav;
+
+Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
+    $navbar->left(Nav\Link::make('Settings', 'forms/settings'));
+    $navbar->right(Nav\Link::make('Register', 'forms/register', 'fa-user'));
+});
 ```
 
-Or use the following html to add a drop-down menu:
-```html
-<li class="dropdown notifications-menu">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-  <i class="fa fa-bell-o"></i>
-  <span class="label label-warning">10</span>
-</a>
-<ul class="dropdown-menu">
-  <li class="header">You have 10 notifications</li>
-  <li>
-    <!-- inner menu: contains the actual data -->
-    <ul class="menu">
-      <li>
-        <a href="#">
-          <i class="fa fa-users text-aqua"></i> 5 new members joined today
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
-          page and may cause design problems
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <i class="fa fa-users text-red"></i> 5 new members joined
-        </a>
-      </li>
+## Add dropdown menu to navigation bar
 
-      <li>
-        <a href="#">
-          <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-        </a>
-      </li>
-      <li>
-        <a href="#">
-          <i class="fa fa-user text-red"></i> You changed your username
-        </a>
-      </li>
-    </ul>
-  </li>
-  <li class="footer"><a href="#">View all</a></li>
-</ul>
-</li>
+Open `app/Admin/bootstrap.php` and add the following:
+
+```php
+use App\Admin\Extensions\Nav;
+
+Admin::navbar(function (\Encore\Admin\Widgets\Navbar $navbar) {
+    $navbar->add(Nav\Shortcut::make([
+        'Posts' => 'posts/create',
+        'Users' => 'users/create',
+        'Images' => 'images/create',
+        'Videos' => 'videos/create',
+        'Articles' => 'articles/create',
+        'Tags' => 'tags/create',
+        'Categories' => 'categories/create',
+    ], 'fa-plus')->title('Create'));
+});
 ```
-
-More components can be found here [Bootstrap](https://getbootstrap.com/)
