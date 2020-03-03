@@ -57,7 +57,7 @@ $navbar->left(view('search-bar'));
 ## Add elements to the right
 
 ```php
-$navbar->left(view('search-bar'));
+$navbar->right(view('search-bar'));
 ```
 
 ## Add links to navigation bar
