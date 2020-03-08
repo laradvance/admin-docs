@@ -63,7 +63,6 @@ class Category extends Model
 }
 ```
 ## Usage
-然后就是在页面中使用`model-tree`了：
 
 Then use `model-tree` in your page
 
