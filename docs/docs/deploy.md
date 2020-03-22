@@ -5,8 +5,7 @@
     - [Nginx](#nginx)
 - [Optimization](#optimization)
     - [Autoloader Optimization](#autoloader-optimization)
-    - [Optimizing Configuration Loading](#optimizing-configuration-loading)
-    - [Optimizing Route Loading](#optimizing-route-loading)
+    - [Optimizing Laradvance Admin](#optimizing-laradvance-admin)
 - [Deploying With Forge](#deploying-with-forge)
 
 <a name="introduction"></a>
@@ -68,23 +67,21 @@ When deploying to production, make sure that you are optimizing Composer's class
 
 > {tip} In addition to optimizing the autoloader, you should always be sure to include a `composer.lock` file in your project's source control repository. Your project's dependencies can be installed much faster when a `composer.lock` file is present.
 
-<a name="optimizing-configuration-loading"></a>
-### Optimizing Configuration Loading
+<a name="optimizing-laradvance-admin"></a>
+### Optimizing Laradvance Admin
 
-When deploying your application to production, you should make sure that you run the `config:cache` Artisan command during your deployment process:
+When deploying your application to production, you should make sure that you run the Optimization process:
 
-    php artisan config:cache
+    php artisan admin:optimize
 
 This command will combine all of Laravel's configuration files into a single, cached file, which greatly reduces the number of trips the framework must make to the filesystem when loading your configuration values.
 
-> {note} If you execute the `config:cache` command during your deployment process, you should be sure that you are only calling the `env` function from within your configuration files. Once the configuration has been cached, the `.env` file will not be loaded and all calls to the `env` function will return `null`.
+> {note} If you execute tthis command during your deployment process, you should be sure that you are only calling the `env` function from within your configuration files. Once the configuration has been cached, the `.env` file will not be loaded and all calls to the `env` function will return `null`.
 
 <a name="optimizing-route-loading"></a>
 ### Optimizing Route Loading
 
-If you are building a large application with many routes, you should make sure that you are running the `route:cache` Artisan command during your deployment process:
-
-    php artisan route:cache
+If you are building a large application with many routes, you should make sure that you are running Optimizing Route Loading during your deployment process.
 
 This command reduces all of your route registrations into a single method call within a cached file, improving the performance of route registration when registering hundreds of routes.
 
