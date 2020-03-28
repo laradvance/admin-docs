@@ -3,7 +3,7 @@
 > This package requires PHP 7+ and Laravel 5.5+
 
 ```
-composer create-project muhlisabdi/crud-admin blog
+composer create-project laradvance/admin
 ```
 
 Update .env file based on your configuration
