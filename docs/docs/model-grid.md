@@ -3,28 +3,21 @@
 Class `Encore\Admin\Grid` is used to generate tables based on the data model,for example,we have a table `movies` in database:
 
 ```sql
-CREATE TABLE `movies` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `director` int(10) unsigned NOT NULL,
-  `describe` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `rate` tinyint unsigned NOT NULL,
-  `released` enum(0, 1),
-  `release_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
+movies
+    id          - integer
+    title       - string
+    director    - integer
+    describe    - string
+    rate        - tinyint
+    released    - enum(0, 1)
+    release_at  - timestamp
+    created_at  - timestamp
+    updated_at  - timestamp
 ```
 
 And the model of this table is `App\Models\Movie`,The following code can generate the data grid for table `movies`:
 
 ```php
-
-use App\Models\Movie;
-use Encore\Admin\Grid;
-use Encore\Admin\Facades\Admin;
 
 use App\Models\Movie;
 use Encore\Admin\Grid;
@@ -91,6 +84,12 @@ $grid->columns('email', 'username' ...);
 
 ```php
 $grid->model()->where('id', '>', 100);
+
+$grid->model()->whereIn('id', [1, 2, 3]);
+
+$grid->model()->whereBetween('votes', [1, 100]);
+
+$grid->model()->whereColumn('updated_at', '>', 'created_at');
 
 $grid->model()->orderBy('id', 'desc');
 
@@ -194,25 +193,16 @@ $grid->perPages([10, 20, 30, 40, 50]);
 The `users` table and the `profiles` table are generated one-to-one relation through the `profiles.user_id` field.
 
 ```sql
+uers
+    id      - integer 
+    name    - string
+    email   - string
 
-CREATE TABLE `users` (
-`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-`name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-`updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-CREATE TABLE `profiles` (
-`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-`user_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`age` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`gender` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-`updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+profiles
+    id      - integer 
+    user_id - integer 
+    age     - string
+    gender  - string
 ```
 
 The corresponding data model are:
@@ -265,24 +255,15 @@ $grid->updated_at();
 The `posts` and `comments` tables generate a one-to-many association via the `comments.post_id` field
 
 ```sql
+posts
+    id      - integer 
+    title   - string
+    content - text
 
-CREATE TABLE `posts` (
-`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-`title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`content` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-`updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-CREATE TABLE `comments` (
-`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-`post_id` int(10) unsigned NOT NULL,
-`content` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-`updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+comments
+    id      - integer 
+    post_id - integer 
+    content - string
 ```
 
 The corresponding data model are:
@@ -313,30 +294,27 @@ You can associate them in a grid with the following code:
 
 $grid = new Grid(new Post);
 
-$grid->id('id')->sortable();
-$grid->title();
-$grid->content();
+$grid->column('id', 'id')->sortable();
+$grid->column('title');
+$grid->column('content');
 
-$grid->comments('Comments count')->display(function ($comments) {
+$grid->column('comments', 'Comments count')->display(function ($comments) {
     $count = count($comments);
     return "<span class='label label-warning'>{$count}</span>";
 });
 
-$grid->created_at();
-$grid->updated_at();
+return $grid;
 
+```
 
+```php
 
 $grid = new Grid(new Comment);
+$grid->column('id');
+$grid->column('post.title');
+$grid->column('content');
 
-$grid->id('id');
-$grid->post()->title();
-$grid->content();
-
-$grid->created_at()->sortable();
-$grid->updated_at();
-
-
+return $grid;
 ```
 
 ### Many to many
@@ -344,35 +322,20 @@ $grid->updated_at();
 The `users` and` roles` tables produce a many-to-many relationship through the pivot table `role_user`
 
 ```sql
+users
+    id       - integer 
+    username - string
+    password - string
+    name     - string 
 
-CREATE TABLE `users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(190) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `users_username_unique` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+roles
+    id      - integer 
+    name    - string
+    slug    - string
 
-CREATE TABLE `roles` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `slug` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `roles_name_unique` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
-
-CREATE TABLE `role_users` (
-  `role_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  KEY `role_users_role_id_user_id_index` (`role_id`,`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+role_users
+    role_id - integer 
+    user_id - integer 
 ```
 
 The corresponding data model are:
