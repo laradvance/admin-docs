@@ -138,7 +138,7 @@ $grid->column('full_name')->display(function () {
 });
 ```
 
-#### Disable the create button 
+#### Disable the create button
 
 ```php
 $grid->disableCreateButton();
@@ -194,13 +194,13 @@ The `users` table and the `profiles` table are generated one-to-one relation thr
 
 ```sql
 uers
-    id      - integer 
+    id      - integer
     name    - string
     email   - string
 
 profiles
-    id      - integer 
-    user_id - integer 
+    id      - integer
+    user_id - integer
     age     - string
     gender  - string
 ```
@@ -256,13 +256,13 @@ The `posts` and `comments` tables generate a one-to-many association via the `co
 
 ```sql
 posts
-    id      - integer 
+    id      - integer
     title   - string
     content - text
 
 comments
-    id      - integer 
-    post_id - integer 
+    id      - integer
+    post_id - integer
     content - string
 ```
 
@@ -319,23 +319,23 @@ return $grid;
 
 ### Many to many
 
-The `users` and` roles` tables produce a many-to-many relationship through the pivot table `role_user`
+The `users` and `roles` tables produce a many-to-many relationship through the pivot table `role_user`
 
 ```sql
 users
-    id       - integer 
+    id       - integer
     username - string
     password - string
-    name     - string 
+    name     - string
 
 roles
-    id      - integer 
+    id      - integer
     name    - string
     slug    - string
 
 role_users
-    role_id - integer 
-    user_id - integer 
+    role_id - integer
+    user_id - integer
 ```
 
 The corresponding data model are:
@@ -377,8 +377,5 @@ $grid->roles()->display(function ($roles) {
 
     return join('&nbsp;', $roles);
 });
-
-$grid->created_at();
-$grid->updated_at();
 
 ```
