@@ -111,8 +111,8 @@ class UserController extends AdminController
 
 The `$title` attribute is used to set the title of this CURD module, which can be modified to any other string.
 
-The `grid` method corresponds to the `list` page of the data. Refer to [model-grid documentation](/docs/model-grid.md) to implement the related functional logic of the list page.
+The `grid` method corresponds to the `list` page of the data. Refer to [model-grid documentation](model-grid.md) to implement the related functional logic of the list page.
 
-The `detail` method corresponds to the `details` page of the data, click on the `detail display` button in the operation column of the list page, and refer to [model-show documentation](/docs/model-show.md) to realize the details page Related functional logic.
+The `detail` method corresponds to the `details` page of the data, click on the `detail display` button in the operation column of the list page, and refer to [model-show documentation](model-show.md) to realize the details page Related functional logic.
 
-The `form` method corresponds to the `create` and `edit` pages of the data. Refer to [model-form documentation](/docs/model-form.md) to implement the relevant functional logic of the data creation and edit pages.
+The `form` method corresponds to the `create` and `edit` pages of the data. Refer to [model-form documentation](model-form.md) to implement the relevant functional logic of the data creation and edit pages.
