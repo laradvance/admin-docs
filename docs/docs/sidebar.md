@@ -2,6 +2,7 @@
   - [Installation](docs/installation.md)
   - [Quick start](docs/quick-start.md)
   - [Configuration](docs/configuration.md)
+  - [Updating](docs/updating.md)
   - [Page content & Layout](docs/content-layout.md)
 - Model grid
   - [Basic usage](docs/model-grid.md)
