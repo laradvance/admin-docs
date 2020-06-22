@@ -66,7 +66,6 @@ $grid->column('created_at')->sortable();
 
 A sort icon will appear in the column header, click to sort
 
-
 ## helpers
 
 ### String operations
@@ -76,7 +75,7 @@ If the current output data is a string, you can call the method of class `Illumi
 For example, the following column shows the string value of the `title` field:
 
 ```php
-$grid->title();
+$grid->column('title');
 ```
 
 Call `Str::limit()` on `title` colum.
@@ -84,15 +83,15 @@ Call `Str::limit()` on `title` colum.
 Can call `Str::limit()` method on the output string of the `title` column.
 
 ```php
-$grid->title()->limit(30);
+$grid->column('title')->limit(30);
 ```
 
 Continue to call `Illuminate\Support\Str` method:
 
 ```php
-$grid->title()->limit(30)->ucfirst();
+$grid->column('title')->limit(30)->ucfirst();
 
-$grid->title()->limit(30)->ucfirst()->substr(1, 10);
+$grid->column('title')->limit(30)->ucfirst()->substr(1, 10);
 
 ```
 
@@ -103,17 +102,17 @@ If the current output data is a array, you can call the method of class `Illumin
 For example, the `tags` column is an array of data retrieved from a one-to-many relationship:
 
 ```php
-$grid->tags();
+$grid->column('tags');
 
 array (
-  0 => 
+  0 =>
   array (
     'id' => '16',
     'name' => 'php',
     'created_at' => '2016-11-13 14:03:03',
     'updated_at' => '2016-12-25 04:29:35',
   ),
-  1 => 
+  1 =>
   array (
     'id' => '17',
     'name' => 'python',
@@ -127,7 +126,7 @@ array (
 Call the `Collection::pluck()` method to get the `name` column from the array
 
 ```php
-$grid->tags()->pluck('name');
+$grid->column('tags')->pluck('name');
 
 array (
     0 => 'php',
@@ -139,7 +138,7 @@ array (
 The output data is still a array after above, so you can call methods of `Illuminate\Support\Collection` continue.
 
 ```php
-$grid->tags()->pluck('name')->map('ucwords');
+$grid->column('tags')->pluck('name')->map('ucwords');
 
 array (
     0 => 'Php',
@@ -150,7 +149,7 @@ array (
 Outputs the array as a string
 
 ```php
-$grid->tags()->pluck('name')->map('ucwords')->implode('-');
+$grid->column('tags')->pluck('name')->map('ucwords')->implode('-');
 
 "Php-Python"
 ```
@@ -163,7 +162,7 @@ For example, the `images` field is a JSON-formatted string type that stores a mu
 
 ```php
 
-$grid->images();
+$grid->column('images');
 
 "['foo.jpg', 'bar.png']"
 
@@ -198,7 +197,7 @@ Use this extension in `model-grid`:
 
 ```php
 
-$grid->title()->color('#ccc');
+$grid->column('title')->color('#ccc');
 
 ```
 
@@ -250,5 +249,5 @@ Column::extend('popover', Popover::class);
 Use the extension in `model-grid`：
 
 ```php
-$grid->desciption()->popover('right');
+$grid->column('desciption')->popover('right');
 ```
