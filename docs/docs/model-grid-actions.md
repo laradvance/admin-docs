@@ -1,11 +1,16 @@
 # Model grid row actions
 
-`model-grid` By default, there are two actions `edit` and `delete`, which can be turned off in the following way:
+`model-grid` has 3 actions: `view` , `edit` and `delete`, which can be turned off in the following way:
 
 ```php
  $grid->actions(function ($actions) {
+     // remove delete
     $actions->disableDelete();
+
+    // remove edit
     $actions->disableEdit();
+
+    // remove view
     $actions->disableView();
 });
 ```
@@ -23,6 +28,22 @@ You can get the data for the current row by `$actions` parameter passed in:
 });
 ```
 
+By default there is a batch delete operation, there are some ways to use
+
+```php
+
+$grid->batchActions(function ($batch) {
+    $batch->disableDelete();
+});
+
+// Remove batch operation
+$grid->disableBatchActions();
+```
+
+## Custom actions
+
+> Starting with v1.7.3, the following documents are deprecated, . please use [Custom actions](/docs/model-grid-custom-actions) instead.
+
 If you have a custom action button, you can add the following:
 
 ```php
@@ -35,10 +56,6 @@ $grid->actions(function ($actions) {
     $actions->prepend('<a href=""><i class="fa fa-paper-plane"></i></a>');
 });
 ```
-
-## Custom actions
-
->  Starting with v1.7.3, the following documents are deprecated, . please use [Custom actions](/docs/model-grid-custom-actions) instead.
 
 If you have more complex actions, you can refer to the following ways:
 
