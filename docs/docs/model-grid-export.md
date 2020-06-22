@@ -1,6 +1,47 @@
 # Data export
 
-The built-in export function of `model-grid` only implements the export of simple csv format files. If you encounter file coding problems or can not meet your own needs, you can follow the steps below to customize the export function.
+`model-grid` has built-in export of csv format files. By default, the data displayed in the list is exported to csv format files.
+
+> since v1.7.16
+
+Using the default csv export, there are the following methods available.
+
+```php
+$grid->export(function ($export) {
+ 
+    $export->filename('Filename.csv');
+
+    $export->except(['column1', 'column2' ...]);
+
+    $export->only(['column3', 'column4' ...]);
+
+    $export->originalValue(['column1', 'column2' ...]);
+
+    $export->column('column_5', function ($value, $original) {
+        return $value;
+    )};
+});
+```
+
+`$export->filename($filename);` is used to specify the name of the exported file, if not set, the default is `table name.csv`
+
+`$export->except([]);` is used to specify which columns do not need to be exported. After specified, the related columns will not be exported, otherwise, use `$export->only([]);` The method is used to specify which columns can only be exported.
+
+In many cases, certain columns will be modified and displayed on the page. For example, after using the `$grid->column('name')->label()` method on the column, the content of the exported column will be a piece of HTML, If you need some columns to export the original content stored in the database, use the `originalValue` method.
+
+`` `php
+$export->originalValue(['name']);
+`` `
+
+Finally, if you want to customize the export content of certain columns, use the `column` method
+
+```php
+$export->column('column_5', function ($value, $original) {
+    // return $value;
+)};
+```
+
+Among them, `$value` and `$original` passed into the closure function are the original value of the column, and the modified value after applying certain methods. You can implement your own logic in the closure function.
 
 ## Laravel-Excel v3.*
 
