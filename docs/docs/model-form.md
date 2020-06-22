@@ -1,24 +1,22 @@
 # Model-Form
 
-The `Encore\Admin\Form` class is used to generate a data model-based form. For example, there is a` movies` table in the database
+The `Encore\Admin\Form` class is used to generate a data model-based form. For example, there is a`movies` table in the database
 
 ```sql
-CREATE TABLE `movies` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `director` int(10) unsigned NOT NULL,
-  `describe` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `rate` tinyint unsigned NOT NULL,
-  `released` enum(0, 1),
-  `release_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+movies
+    id          - integer
+    title       - string
+    director    - integer
+    describe    - string
+    rate        - tinyint
+    released    - enum(0, 1)
+    release_at  - timestamp
+    created_at  - timestamp
+    updated_at  - timestamp
 
 ```
 
-The corresponding data model is `App\Models\Movie`, and the following code can generate the` movies` data form:
+The corresponding data model is `App\Models\Movie`, and the following code can generate the`movies` data form:
 
 ```php
 
@@ -54,7 +52,7 @@ $form->switch('released', 'Released?');
 // Add a date and time selection box
 $form->dateTime('release_at', 'release time');
 
-// Display two time column 
+// Display two time column
 $form->display('created_at', 'Created time');
 $form->display('updated_at', 'Updated time');
 
@@ -148,73 +146,17 @@ Determine if the current form page is creating or updating
 ```php
 $form->isCreating();
 
-$form->isEditing();
+$form->isUpdating();
 ```
 
-## Model relationship
+> Since v1.8.0
 
-### One to One
-
-The `users` table and the `profiles` table are generated one-to-one relation through the `profiles.user_id` field.
-
-```sql
-
-CREATE TABLE `users` (
-`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-`name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-`updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-CREATE TABLE `profiles` (
-`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-`user_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`age` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`gender` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-`created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-`updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-```
-
-The corresponding data model are:
+Submit confirmation
 
 ```php
+$form->confirm('确定更新吗？', 'update');
 
-class User extends Model
-{
-    public function profile()
-    {
-        return $this->hasOne(Profile::class);
-    }
-}
+$form->confirm('确定创建吗？', 'create');
 
-class Profile extends Model
-{
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-}
-
-```
-
-You can associate them in a form with the following code:
-
-```php
-$form = new Form(new User);
-
-$form->display('id');
-
-$form->text('name');
-$form->text('email');
-
-$form->text('profile.age');
-$form->text('profile.gender');
-
-$form->datetime('created_at');
-$form->datetime('updated_at');
-
+$form->confirm('确定提交吗？');
 ```
