@@ -16,7 +16,7 @@ $grid->filter(function($filter){
 
 ```
 
-## Updates in v1.5.18 
+## Updates in v1.5.18
 
 The `v1.5.8` version has the following updates to the filter query.
 
@@ -25,6 +25,7 @@ The `v1.5.8` version has the following updates to the filter query.
 > v1.5.18 version and above support
 
 Adjust the style of the filter query panel, from the original pop-up modal to the embedded table header, click the filter button to expand the display, the default is not expanded, you can let it expand by default in the following way:
+
 ```php
 
 // Operate on the `$grid` instance
@@ -69,25 +70,33 @@ You can call any `eloquent` query condition after the `scope` method. The effect
 Currently supported filter types are the following:
 
 ### Equal
-`sql: ... WHERE `column` = ""$input""`：
+
+`sql: ... WHERE`column`= ""$input""`：
+
 ```php
 $filter->equal('column', $label);
 ```
 
 ### Not equal
-`sql: ... WHERE `column` != ""$input""`：
+
+`sql: ... WHERE`column`!= ""$input""`：
+
 ```php
 $filter->notEqual('column', $label);
 ```
 
 ### Like
-`sql: ... WHERE `column` LIKE "%"$input"%"`：
+
+`sql: ... WHERE`column`LIKE "%"$input"%"`：
+
 ```php
 $filter->like('column', $label);
 ```
 
 ### Ilike
-`sql: ... WHERE `column` ILIKE "%"$input"%"`：
+
+`sql: ... WHERE`column`ILIKE "%"$input"%"`：
+
 ```php
 $filter->ilike('column', $label);
 ```
@@ -97,6 +106,7 @@ $filter->ilike('column', $label);
 > since v1.6.12
 
 Equal to like query
+
 ```php
 $filter->contains('title');
 ```
@@ -106,6 +116,7 @@ $filter->contains('title');
 > since v1.6.12
 
 Query title field data starting with input
+
 ```php
 $filter->startsWith('title');
 ```
@@ -121,19 +132,25 @@ $filter->endsWith('title');
 ```
 
 ### Greater then
-`sql: ... WHERE `column` > "$input"`：
+
+`sql: ... WHERE`column`> "$input"`：
+
 ```php
 $filter->gt('column', $label);
 ```
 
 ### Less than
-`sql: ... WHERE `column` < "$input"`：
+
+`sql: ... WHERE`column`< "$input"`：
+
 ```php
 $filter->lt('column', $label);
 ```
 
 ### Between
-`sql: ... WHERE `column` BETWEEN "$start" AND "$end"`：
+
+`sql: ... WHERE`column`BETWEEN "$start" AND "$end"`：
+
 ```php
 $filter->between('column', $label);
 
@@ -145,37 +162,49 @@ $filter->between('column', $label)->time();
 ```
 
 ### In
-`sql: ... WHERE `column` in (...$inputs)`：
+
+`sql: ... WHERE`column`in (...$inputs)`：
+
 ```php
 $filter->in('column', $label)->multipleSelect(['key' => 'value']);
 ```
 
 ### NotIn
-`sql: ... WHERE `column` not in (...$inputs)`：
+
+`sql: ... WHERE`column`not in (...$inputs)`：
+
 ```php
 $filter->notIn('column', $label)->multipleSelect(['key' => 'value']);
 ```
 
 ### Date
+
 `sql: ... WHERE DATE(`column`) = "$input"`：
+
 ```php
 $filter->date('column', $label);
 ```
 
 ### Day
+
 `sql: ... WHERE DAY(`column`) = "$input"`：
+
 ```php
 $filter->day('column', $label);
 ```
 
 ### Month
+
 `sql: ... WHERE MONTH(`column`) = "$input"`：
+
 ```php
 $filter->month('column', $label);
 ```
 
 ### year
+
 `sql: ... WHERE YEAR(`column`) = "$input"`：
+
 ```php
 $filter->year('column', $label);
 ```
@@ -184,7 +213,8 @@ $filter->year('column', $label);
 
 You can use `where` to build more complex query filtering
 
-`sql: ... WHERE `title` LIKE "%$input" OR `content` LIKE "%$input"`：
+`sql: ... WHERE`title`LIKE "%$input" OR`content`LIKE "%$input"`：
+
 ```php
 $filter->where(function ($query) {
 
@@ -194,7 +224,8 @@ $filter->where(function ($query) {
 }, 'Text');
 ```
 
-`sql: ... WHERE `rate` >= 6 AND `created_at` = {$input}`:
+`sql: ... WHERE`rate`>= 6 AND`created_at`= {$input}`:
+
 ```php
 $filter->where(function ($query) {
 
@@ -204,6 +235,7 @@ $filter->where(function ($query) {
 ```
 
 Relationship query, query the corresponding relationship `profile` field:
+
 ```php
 $filter->where(function ($query) {
 
@@ -215,6 +247,8 @@ $filter->where(function ($query) {
 ```
 
 ## Field type
+
+### Text
 
 The default field type is text input, set placeholder for text input:
 
@@ -251,6 +285,7 @@ $filter->equal('column')->inputmask($options = [], $icon = 'pencil');
 ```
 
 ### Select
+
 ```php
 $filter->equal('column')->select(['key' => 'value'...]);
 
@@ -259,7 +294,9 @@ $filter->equal('column')->select('api/users');
 ```
 
 ### multipleSelect
-Generally used in conjunction with `in` and` notIn` need to query the array of two types of inquiries can also be used in the `type` type of query:
+
+Generally used in conjunction with `in` and`notIn` need to query the array of two types of inquiries can also be used in the `type` type of query:
+
 ```php
 $filter->in('column')->multipleSelect(['key' => 'value'...]);
 
@@ -268,6 +305,7 @@ $filter->in('column')->multipleSelect('api/users');
 ```
 
 ### radio
+
 The more common scenario is the selection of categories
 
 ```php
@@ -279,6 +317,7 @@ $filter->equal('released')->radio([
 ```
 
 ### checkbox
+
 The more common scene is do the scope query with `whereIn`:
 
 ```php
@@ -313,7 +352,7 @@ $filter->equal('column')->year();
 ```
 
 ## Complex query filter
- 
+
 You can use the `$this->input` to trigger complex custom queries:
 
 ```php
@@ -356,9 +395,10 @@ $filter->column(1/2, function ($filter) {
     ]);
 });
 ```
+
 > By default, there will be a filter for the primary key field in the first column, and all three filters for the left and right will have a total of 6 filters.
 
-The first parameter of the `column` method sets the column width, which can be set to the scale `1/2` or `0.5`, or the width of the grid column of the bootstrap is `6`. If it is three columns, it can be set to `1/3. `or `4`
+The first parameter of the `column` method sets the column width, which can be set to the scale `1/2` or `0.5`, or the width of the grid column of the bootstrap is `6`. If it is three columns, it can be set to `1/3.`or `4`
 
 See [DEMO](http://demo.laravel-admin.org/posts)
 
@@ -381,6 +421,7 @@ $filter->group('rate', function ($group) {
 ```
 
 There are several ways to call
+
 ```php
 // equals
 $group->equal();
