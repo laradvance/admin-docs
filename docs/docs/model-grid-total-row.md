@@ -9,10 +9,13 @@ If the value of a column field is a number and it needs to be displayed at the b
 ```php
 $grid->column('manager_name')->totalRow('Total:');
 
-$grid->column('expand_orders')->totalCount(); //for counting rows
+//for counting rows
+$grid->column('expand_orders')->totalCount();
 
-$grid->column('orders_all_sum')->totalSum(); //for counting sum
+//for counting sum
+$grid->column('orders_all_sum')->totalSum();
 
+//for counting average
 $grid->column('orders_approved_avg')->totalAvg();//for counting average
 ```
 
