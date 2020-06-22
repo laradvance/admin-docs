@@ -21,7 +21,9 @@
   - [Spec selector](docs/model-grid-spec-selector.md)
   - [Quick create](docs/model-grid-quick-create.md)
   - [Custom tools](docs/model-grid-custom-tools.md)
+  - [External data source](docs/model-grid-data.md)
   - [Hot keys](docs/model-grid-hotkeys.md)
+  - [Soft Deletes](docs/model-grid-soft-deletes.md)
 - Model form
   - [Basic usage](docs/model-form.md)
   - [Image/File upload](docs/model-form-upload.md)
