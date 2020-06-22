@@ -18,11 +18,12 @@ Open `http://localhost/admin/` in browser,use username `admin` and password `adm
 
 After the installation is complete, the following files are generated in the project directory:
 
-### Configuration file
+#### 1. Configuration file
 
 After the installation is complete,all configurations are in the `config/admin.php` file.
 
-### Admin files
+#### 2. Admin files
+
 After install,you can find directory`app/Admin`,and then most of our develop work is under this directory.
 
 ```
@@ -40,6 +41,6 @@ app/Admin
 
 The `app/Admin/Controllers` directory is used to store all the controllers, The `HomeController.php` file under this directory is used to handle home request of admin,The `ExampleController.php` file is a controller example.
 
-### Static assets
+#### 3. Static assets
 
 The front-end static files are in the `/public/packages/admin` directory.
