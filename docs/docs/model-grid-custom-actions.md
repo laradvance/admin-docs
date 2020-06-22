@@ -1,4 +1,3 @@
-
 # Custom Line & Batch action
 
 > Since v1.7.3
@@ -158,8 +157,7 @@ $grid->batchActions(function ($batch) {
 
 Then select a few rows of data in the list, click on it to see the new `batch copy`:
 
-[1563769003923](https://user-images.githubusercontent.com/1479100/61605975-9a866f80-ac7a-11e9-867b-bde14aa7910d.jpg)
-
+![1563769003923](https://user-images.githubusercontent.com/1479100/61605975-9a866f80-ac7a-11e9-867b-bde14aa7910d.jpg)
 
 ## Interaction
 
@@ -338,7 +336,6 @@ The display effect is as follows:
 
 ![WX20190722-135110](https://user-images.githubusercontent.com/1479100/61609162-c9571280-ac87-11e9-8f93-869a188c5553.png)
 
-
 ### Normal action
 
 Suppose you need to add an 'Import Data` button to the header of the form. After clicking, pop up the form upload file to import the data. Refer to the steps below.
@@ -420,7 +417,6 @@ HTML;
 ![WX20190722-140613](https://user-images.githubusercontent.com/1479100/61609900-176d1580-ac8a-11e9-8201-78a092e5bd58.png)
 
 ![WX20190722-140625](https://user-images.githubusercontent.com/1479100/61609908-1a680600-ac8a-11e9-828f-9a9acb0777b0.png)
-
 
 ## Response
 
@@ -515,5 +511,46 @@ Or open it separately in each table:
 ```php
 use Encore\Admin\Grid\Displayers\DropdownActions;
 
-$grid->setActionClass(DropdownActio
+$grid->setActionClass(DropdownActions::class);
+```
+
+## Switch the form of the operation column
+
+Currently, the operation column of the table supports three types of operation buttons, `icon button`, `drop-down menu`, and `right-click menu`. The `icon button` is the most original button form, and the other two are added after the v1.7 version, the purpose is to facilitate customization More line operations.
+
+If you want to switch between these three forms, you can use the following method.
+
+### Global Switch
+
+Configure in config/admin.php:
+
+```php
+// The most primitive form of `button icon`
+'grid_action_class' => \Encore\Admin\Grid\Displayers\Actions::class,
+
+// Use the `drop-down menu` form
+'grid_action_class' => \Encore\Admin\Grid\Displayers\DropdownActions::class,
+
+// Use the `right-click menu` form
+'grid_action_class' => \Encore\Admin\Grid\Displayers\ContextMenuActions::class,
+```
+
+### Individual configuration
+
+You can also specify different forms for each form
+
+```php
+
+use Encore\Admin\Grid\Displayers\Actions;
+use Encore\Admin\Grid\Displayers\DropdownActions;
+use Encore\Admin\Grid\Displayers\ContextMenuActions;
+
+// The most primitive form of `button icon`
+$grid->setActionClass(Actions::class);
+
+// Use the `drop-down menu` form
+$grid->setActionClass(DropdownActions::class);
+
+// Use the `right-click menu` form
+$grid->setActionClass(ContextMenuActions::class);
 ```
