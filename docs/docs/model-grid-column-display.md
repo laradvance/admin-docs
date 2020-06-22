@@ -28,6 +28,41 @@ $grid->column('full_name')->display(function () {
 });
 ```
 
+> Note: Try to avoid querying the database or calling the external API in the callback function. This will run the query or the call of the external interface when each row is rendered, which seriously affects the performance. A good way is to establish an association relationship with the model. Use the model's `with` method to query the associated data together.
+
+## collection callback
+
+This method is different from the `display` callback in that it can modify data in batches. Refer to the following use cases in the following examples:
+
+```php
+use Illuminate\Database\Eloquent\Collection;
+
+$grid->model()->collection(function(Collection $collection) {
+    
+    // 1. You can add fields to each column, similar to the effect of the display callback above
+    foreach ($collection as $item) {
+        $item->full_name = $item->first_name. ''. $item->last_name;
+    }
+
+    // 2. Add a sequence column to the table
+    foreach ($collection as $index => $item) {
+        $item->number = $index;
+    }
+    
+    // 3. Get data from external interface and fill it into the model collection
+    $ids = $collection->pluck('id');
+    $data = getDataFromApi($ids);
+    foreach ($collection as $index => $item) {
+        $item->column_name = $data[$index];
+    }
+
+    // Finally must return the collection object
+    return $collection;
+});
+```
+
+`$collection` represents the current model collection of tabular data. You can read or modify its data according to your needs.
+
 ## Display different components according to conditions
 
 If this column is to be displayed as a different component based on certain criteria
@@ -133,6 +168,33 @@ The effect is as follows:
 
 ![Kapture 2019-03-10 at 23 43 49](https://user-images.githubusercontent.com/1479100/54087609-7abb7280-438f-11e9-8a44-7e68bb126cd1.gif)
 
+## Asynchronous loading
+
+> Since v1.8.0
+
+First define the renderable class
+
+```php
+use Illuminate\Contracts\Support\Renderable;
+
+class ShowUser implements Renderable
+{
+    public function render($key = null)
+    {
+        dump(User::find($key)->toArray());
+    }
+}
+```
+
+In the `render` method, you can output or return any content, which will be displayed in the `modal` pop-up box of the list:
+
+```php
+$grid->expand('user', 'Title')->modal(ShowUser::class);
+
+// or
+$grid->column('user','Title')->modal('Title...', ShowUser::class);
+```
+
 ## Gavatar
 
 If this column of data is a email, you want to display it as a Gavatar:
@@ -172,6 +234,8 @@ $grid->column('title')->copyable();
 ```
 
 ## QR code
+
+![WX20190830-001812](https://user-images.githubusercontent.com/1479100/63958324-b6243780-cabc-11e9-9572-827d04d6bd81.png)
 
 Through the following call, a QR code icon will appear in front of each line of text in this column. Click on it to expand a small bullet box, which will display the QR code of this column value.
 
@@ -304,6 +368,7 @@ $grid->column('images')->carousel();
 / / Set the display size and image server
 $grid->column('images')->carousel($width = 300, int $height = 200, $server);
 ```
+
 ## Date format
 
 > Since v1.7.3
