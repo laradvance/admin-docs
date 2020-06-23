@@ -26,7 +26,7 @@ If required, you can add additional fields to ignore using the submitted functio
 $form->submitted(function (Form $form) {
     $form->ignore('username');
  });
- ```
+```
 
 The form data that is currently submitted can be retrieved from the callback parameter `$form`:
 
@@ -34,6 +34,20 @@ The form data that is currently submitted can be retrieved from the callback par
 $form->saving(function (Form $form) {
 
     dump($form->username);
+
+});
+
+```
+
+Assign value to a field from anther：
+
+```php
+$form->text('name');
+$form->hidden('slug');
+
+$form->saving(function (Form $form) {
+
+    $form->slug = $form->name;
 
 });
 
@@ -104,27 +118,27 @@ $form->saving(function ($form) {
 
 ```
 
-## deleting & deleted
+## Before and after deletion
 
-> since v1.6.13
+> Since v1.6.13, has been deprecated from v1.7 version, you can use the model's delete callback instead
 
-Two callbacks `deleting` and `deleted` were added before and after the deletion.
+Two callback deleting and deleting were added before and after deletion.
 
 Can throw an exception directly
 
 ```php
 $form->deleting(function () {
     ...
-    throw new \Exception('Some error..');
+    throw new \Exception('Error message！');
 });
 
 $form->deleted(function () {
     ...
-    throw new \Exception('Some error..');
+    throw new \Exception('hahaa');
 });
 ```
 
-Return a json response directly, which can be used to modify the prompt text:
+Directly return a json response, which can be used to modify the copy prompt:
 
 ```php
 
@@ -132,7 +146,7 @@ $form->deleting(function () {
     ...
     return response()->json([
         'status'  => false,
-        'message' => 'Delete failed, please. .',
+        'message' => 'Deletion failed, please. .',
     ]);
 });
 
@@ -140,8 +154,7 @@ $form->deleted(function () {
     ...
     return response()->json([
         'status'  => false,
-        'message' => 'Delete failed, please. .',
+        'message' => 'Delete failed, please.',
     ]);
 });
-
 ```
