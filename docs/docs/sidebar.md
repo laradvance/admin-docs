@@ -27,6 +27,7 @@
 - Model form
   - [Basic usage](docs/model-form.md)
   - [Image/File upload](docs/model-form-upload.md)
+  - [JSON Fields](docs/model-form-json-fields.md)
   - [Form fields](docs/model-form-fields.md)
   - [Form field management](docs/model-form-field-management.md)
   - [Form validation](docs/model-form-validation.md)
