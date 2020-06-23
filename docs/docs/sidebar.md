@@ -43,6 +43,7 @@
   - [Extension](docs/model-show-extension.md)
 - [Model tree](docs/model-tree.md)
 - [Data from](docs/data-form.md)
+- [Localization](docs/localization.md)
 - Admin extensions
   - [Extension development](docs/extension-development.md)
 - [Console commands](docs/commands.md)
