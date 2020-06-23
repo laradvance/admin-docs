@@ -104,15 +104,80 @@ After filling in the data submission form on the page, the request will go to th
         // Get data from the $request object to process...
 
         // Add a success prompt
-        admin_success('数据处理成功.');
+        admin_success('Successful data processing');
 
         // or an error message
-        admin_success('数据处理成功失败.');
+        admin_success('Data processing failed.');
 
         // Go back to the original form page after processing is complete, or jump to another page by returning `redirect()` method
         return back();
     }
 ```
+
+### Form routing registration
+
+> Since 1.8.0
+
+In the `v1.8.* version`, you can directly use the form registration route, eliminating the step of creating a controller.
+
+First put the form in the controller directory, `app/Admin/Controllers/Setting.php`, and then register the route in `app/Admin/routes.php`:
+
+```php
+$router->get('form', Setting::class);
+```
+
+Set the title and introduction of the page in the form class:
+
+```php
+class Setting extends Form
+{
+    public $title = '页面标题';
+
+    public $description = '页面介绍';
+}
+```
+
+### Back with data
+
+A common scenario is that after the form is submitted, the backend processes the data, and then puts the result into `session`:
+
+```php
+    public function handle(Request $request)
+    {
+        $result = // Calculate and obtain data...
+
+        return back()->with(['result' => $result]);
+    }
+```
+
+Return the data `$result` and display it on the page:
+
+```php
+<?php
+
+use App\Admin\Forms\Search;
+use App\Http\Controllers\Controller;
+use Encore\Admin\Layout\Content;
+
+class UserController extends Controller
+{
+    public function setting(Content $content)
+    {
+        $content
+            ->title('Search')
+            ->row(new Search());
+
+        // If there is data returned from the backend, take it out of the session and display it at the bottom of the form
+        if ($result = session('result')) {
+            $content->row('<pre>'.json_encode($result).'</pre>');
+        }
+
+        return $content;
+    }
+}
+```
+
+> You can also use the `withInput` method, corresponding to the `old` method.
 
 ## Tab form
 
@@ -139,7 +204,7 @@ class FormController extends Controller
         ];
 
         return $content
-            ->title('系统设置')
+            ->title('Title')
             ->body(Tab::forms($forms));
     }
 }
